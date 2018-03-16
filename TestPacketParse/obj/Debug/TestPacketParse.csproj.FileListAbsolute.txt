@@ -1,0 +1,9 @@
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\bin\Debug\TestPacketParse.exe.config
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\bin\Debug\TestPacketParse.exe
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\bin\Debug\TestPacketParse.pdb
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\bin\Debug\NET.Channel.dll
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\bin\Debug\NET.Channel.pdb
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\obj\Debug\TestPacketParse.csprojResolveAssemblyReference.cache
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\obj\Debug\TestPacketParse.csproj.CoreCompileInputs.cache
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\obj\Debug\TestPacketParse.exe
+C:\Users\17TRACK\Desktop\KCP1.0\NET.KCP\TestPacketParse\obj\Debug\TestPacketParse.pdb

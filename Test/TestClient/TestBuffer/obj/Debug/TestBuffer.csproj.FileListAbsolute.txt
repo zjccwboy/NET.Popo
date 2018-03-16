@@ -1,0 +1,9 @@
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\obj\Debug\TestBuffer.csprojResolveAssemblyReference.cache
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\obj\Debug\TestBuffer.csproj.CoreCompileInputs.cache
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\bin\Debug\TestBuffer.exe.config
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\bin\Debug\TestBuffer.exe
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\bin\Debug\TestBuffer.pdb
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\bin\Debug\NET.Channel.dll
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\bin\Debug\NET.Channel.pdb
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\obj\Debug\TestBuffer.exe
+C:\Users\zjccw\Desktop\KCP\Test\TestClient\TestBuffer\obj\Debug\TestBuffer.pdb
