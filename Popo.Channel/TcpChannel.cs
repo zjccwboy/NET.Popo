@@ -9,7 +9,7 @@ namespace Popo.Channel
 {
     public class TcpChannel : NetChannel
     {
-        private SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1);
+        private SemaphoreSlim sendSemaphore = new SemaphoreSlim(1);
         private TcpClient tcpClient;
         private NetworkStream netStream;
         private DateTime recvTime = DateTime.Now;
@@ -47,14 +47,13 @@ namespace Popo.Channel
             try
             {
                 CancellationTokenSource cancel = new CancellationTokenSource(3000);
-                cancel.Token.Register(() => { if (Connected) { DisConnect(); } }, false);
+                cancel.Token.Register(() => { if (Connected) { OnError?.Invoke(this, SocketError.SocketError); } }, false);
                 await tcpClient.ConnectAsync(EndPoint.Address, EndPoint.Port);
                 if (CallConnect())
                 {
                     Connected = true;
                     return true;
                 }
-
             }
             catch(Exception e)
             {
@@ -91,7 +90,7 @@ namespace Popo.Channel
 
         public override async Task SendAsync(Packet packet)
         {
-            await SemaphoreSlim.WaitAsync();
+            await sendSemaphore.WaitAsync();
             SendParser.WriteBuffer(packet);
             if (!netStream.CanWrite)
             {
@@ -100,11 +99,11 @@ namespace Popo.Channel
             while (SendParser.Buffer.DataSize > 0)
             {
                 CancellationTokenSource cancel = new CancellationTokenSource(3000);
-                cancel.Token.Register(() => { if (Connected) { DisConnect(); } }, false);
+                cancel.Token.Register(() => { if (Connected) { OnError?.Invoke(this, SocketError.SocketError); } }, false);
                 await netStream.WriteAsync(SendParser.Buffer.First, SendParser.Buffer.FirstOffset, SendParser.Buffer.FirstCount, cancel.Token);
                 SendParser.Buffer.UpdateRead(SendParser.Buffer.FirstCount);
             }
-            SemaphoreSlim.Release();
+            sendSemaphore.Release();
         }
 
         public override async Task RequestAsync(Packet packet, Action<Packet> recvAction)
@@ -127,13 +126,14 @@ namespace Popo.Channel
                 try
                 {
                     CancellationTokenSource cancel = new CancellationTokenSource(3000);
-                    cancel.Token.Register(() =>{if (Connected){DisConnect();}}, false);
+                    cancel.Token.Register(() =>{if (Connected){ OnError?.Invoke(this, SocketError.SocketError); }}, false);
                     var count = await netStream.ReadAsync(RecvParser.Buffer.Last, RecvParser.Buffer.LastOffset, RecvParser.Buffer.LastCount, cancel.Token);
                     if (count <= 0)
                     {
                         throw new SocketException((int)SocketError.SocketError);
                     }
                     RecvParser.Buffer.UpdateWrite(count);
+                    recvTime = DateTime.Now;
                     while (true)
                     {
                         var packet = RecvParser.ReadBuffer();
@@ -157,11 +157,14 @@ namespace Popo.Channel
                         }
                     }
                 }
-                catch
+                catch(SocketException e)
                 {
-                    OnError?.Invoke(this);
+                    OnError?.Invoke(this, e.SocketErrorCode);
                 }
-
+                catch(Exception e)
+                {
+                    Console.Write(e.ToString());
+                }
             }
         }
 
