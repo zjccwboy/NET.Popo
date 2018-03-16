@@ -105,7 +105,7 @@ namespace NET.Channel
                 }
                 if (size < 0)
                 {
-                    throw new ArgumentOutOfRangeException("out of buffer.");
+                    throw new ArgumentOutOfRangeException("data index out of buffer.");
                 }
                 return size;
             }
