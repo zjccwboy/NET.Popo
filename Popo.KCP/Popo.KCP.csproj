@@ -7,8 +7,8 @@
     <ProjectGuid>{CBA231CD-FD43-4F57-B580-2130BBA77C3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NET.KCP</RootNamespace>
-    <AssemblyName>NET.KCP</AssemblyName>
+    <RootNamespace>Popo.KCP</RootNamespace>
+    <AssemblyName>Popo.KCP</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -7,8 +7,8 @@
     <ProjectGuid>{6B1238CC-A3F5-435F-A183-A921EDB082C0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NET.Channel</RootNamespace>
-    <AssemblyName>NET.Channel</AssemblyName>
+    <RootNamespace>Popo.Channel</RootNamespace>
+    <AssemblyName>Popo.Channel</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

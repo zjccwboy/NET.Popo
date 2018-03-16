@@ -7,8 +7,8 @@
     <ProjectGuid>{4B11AC1C-C095-49D0-9175-582A47140640}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NET.Service</RootNamespace>
-    <AssemblyName>NET.Service</AssemblyName>
+    <RootNamespace>Popo.Service</RootNamespace>
+    <AssemblyName>Popo.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

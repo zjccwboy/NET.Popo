@@ -7,8 +7,8 @@
     <ProjectGuid>{BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NET.Object</RootNamespace>
-    <AssemblyName>NET.Object</AssemblyName>
+    <RootNamespace>Popo.Object</RootNamespace>
+    <AssemblyName>Popo.Object</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
