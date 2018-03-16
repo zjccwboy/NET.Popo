@@ -1,5 +1,5 @@
-﻿using NET.Channel;
-using NET.Service;
+﻿using Popo.Channel;
+using Popo.Service;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
