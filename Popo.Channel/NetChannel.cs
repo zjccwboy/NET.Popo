@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Popo.Object;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Popo.Channel
 {
-    public abstract class NetChannel
+    public abstract class NetChannel : PopoObject
     {
         protected PacketParse RecvParser;
         protected PacketParse SendParser;
@@ -19,7 +20,6 @@ namespace Popo.Channel
         public abstract Task<bool> StartConnecting();
         public abstract Task<bool> ReConnecting();
         public abstract void DisConnect();
-        public long ChannelId { get;protected set; }
         public abstract Task SendAsync(Packet packet);
         public abstract Task RequestAsync(Packet packet, Action<Packet> recvAction);
         

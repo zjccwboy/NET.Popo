@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ObjectPool.cs" />
+    <Compile Include="GlobalId.cs" />
+    <Compile Include="PopoObjectPool.cs" />
     <Compile Include="PopoObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

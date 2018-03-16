@@ -16,30 +16,30 @@ namespace TestChannel
         static TcpService service;
         static void Main(string[] args)
         {
-            IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9936);
-            service = new TcpService(iPEndPoint, NetType.Server);
-            service.Start();
+            //IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9936);
+            //service = new TcpService(iPEndPoint);
+            //service.Start();
 
-            var count = 0;
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            //var count = 0;
+            //Stopwatch stopwatch = new Stopwatch();
+            //stopwatch.Start();
             
-            service.OnReceive = async(c, p) =>
-            {
-                try
-                {
-                    await c.SendAsync(p);
-                    Interlocked.Increment(ref count);
-                   // Console.WriteLine($"{p.RpcId}");
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    await Task.Delay(10000000);
-                }
-            };
+            //service.OnReceive = async(c, p) =>
+            //{
+            //    try
+            //    {
+            //        await c.SendAsync(p);
+            //        Interlocked.Increment(ref count);
+            //       // Console.WriteLine($"{p.RpcId}");
+            //    }
+            //    catch(Exception e)
+            //    {
+            //        Console.WriteLine(e.Message);
+            //        await Task.Delay(10000000);
+            //    }
+            //};
 
-            Console.Read();
+            //Console.Read();
         }
     }
 }

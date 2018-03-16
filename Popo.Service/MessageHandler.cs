@@ -1,4 +1,5 @@
 ﻿using Popo.Channel;
+using Popo.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Popo.Service
 {
-    public abstract class MessageHandler
+    public abstract class MessageHandler : PopoObject
     {
         public int HandlerId { get; private set; }
 

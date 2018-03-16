@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Popo.Channel">
+      <HintPath>..\Popo.Channel\bin\Debug\Popo.Channel.dll</HintPath>
+    </Reference>
+    <Reference Include="Popo.Service">
+      <HintPath>..\Popo.Service\bin\Debug\Popo.Service.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

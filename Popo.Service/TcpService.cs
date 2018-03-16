@@ -33,8 +33,8 @@ namespace Popo.Service
             {
                 var client = await tcpListener.AcceptTcpClientAsync();
                 var channel = new TcpChannel(client);
-                channel.OnError = (c)=> { Channels.Remove(c.ChannelId); };
-                Channels.Add(channel.ChannelId, channel);
+                channel.OnError = (c)=> { Channels.Remove(c.ObjectId); };
+                Channels.Add(channel.ObjectId, channel);
                 channel.OnReceive = (p) => { OnReceive(channel, p); };
             }
         }
@@ -49,8 +49,8 @@ namespace Popo.Service
 
             if (await CurrentChannel.StartConnecting())
             {
-                CurrentChannel.OnError = (c) => { Channels.Remove(c.ChannelId); };
-                Channels.Add(CurrentChannel.ChannelId, CurrentChannel);
+                CurrentChannel.OnError = (c) => { Channels.Remove(c.ObjectId); };
+                Channels.Add(CurrentChannel.ObjectId, CurrentChannel);
                 CurrentChannel.OnReceive = (p) => { OnReceive(CurrentChannel, p); };
             }
         }
@@ -69,7 +69,7 @@ namespace Popo.Service
             foreach (var channel in values)
             {
                 channel.DisConnect();
-                Channels.Remove(channel.ChannelId);
+                Channels.Remove(channel.ObjectId);
             }
         }
     }

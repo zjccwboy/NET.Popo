@@ -1,4 +1,5 @@
 ﻿using Popo.Channel;
+using Popo.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Popo.Service
         }
     }
 
-    public abstract class NetService
+    public abstract class NetService : PopoObject
     {
         protected readonly Dictionary<long, NetChannel> Channels = new Dictionary<long, NetChannel>();
         public Action<NetChannel,Packet> OnReceive;

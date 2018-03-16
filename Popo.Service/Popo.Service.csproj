@@ -30,8 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NET.Channel">
-      <HintPath>..\NET.Channel\bin\Debug\NET.Channel.dll</HintPath>
+    <Reference Include="Popo.Channel">
+      <HintPath>..\Popo.Channel\bin\Debug\Popo.Channel.dll</HintPath>
+    </Reference>
+    <Reference Include="Popo.Object">
+      <HintPath>..\Popo.Object\bin\Debug\Popo.Object.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,4 +1,5 @@
 ﻿using Popo.Channel;
+using Popo.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +11,17 @@ namespace Popo.Service
 {
     public class MessageHandlerManager
     {
-        private static int handerId;
-        private static int newHanderId
-        {
-            get
-            {
-                Interlocked.Increment(ref handerId);
-                Interlocked.CompareExchange(ref handerId, 1, int.MaxValue);
-                return handerId;
-            }
-        }
 
         public static T Create<T>(NetChannel channel) where T : MessageHandler
         {
             var type = typeof(T);
-            var handler = (T)Activator.CreateInstance(type, channel, newHanderId);
+            var handler = (T)PopoObjectPool.Fetch(typeof(T), channel);
             return handler;
         }
 
         public static MessageHandler Create(Type handlerType, NetChannel channel)
         {
-            var handler = (MessageHandler)Activator.CreateInstance(handlerType, channel, newHanderId);
+            var handler = (MessageHandler)PopoObjectPool.Fetch(handlerType, channel);
             return handler;
         }
 

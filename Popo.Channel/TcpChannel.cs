@@ -13,18 +13,7 @@ namespace Popo.Channel
         private TcpClient tcpClient;
         private NetworkStream netStream;
         private DateTime recvTime = DateTime.Now;
-        private ConcurrentDictionary<int, Action<Packet>> rpcActions = new ConcurrentDictionary<int, Action<Packet>>();
-        
-        private static long channelId;
-        private static long newChannelId
-        {
-            get
-            {
-                Interlocked.Increment(ref channelId);
-                Interlocked.CompareExchange(ref channelId, 1, int.MaxValue);
-                return channelId;
-            }
-        }
+        private ConcurrentDictionary<int, Action<Packet>> rpcActions = new ConcurrentDictionary<int, Action<Packet>>();       
 
         private int rpcId;
         private int newRpcId
@@ -42,18 +31,13 @@ namespace Popo.Channel
             EndPoint = endPoint;
         }
 
-        public TcpChannel(TcpClient tcpClient) : this()
+        public TcpChannel(TcpClient tcpClient)
         {
             this.tcpClient = tcpClient;
             RecvParser = new PacketParse();
             SendParser = new PacketParse();
             netStream = tcpClient.GetStream();
             StartRecv();
-        }
-
-        private TcpChannel()
-        {
-            ChannelId = newChannelId;
         }
 
         public override async Task<bool> StartConnecting()

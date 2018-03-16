@@ -9,5 +9,10 @@ namespace Popo.Object
     public abstract class PopoObject
     {
         public long ObjectId { get; set; }
+
+        public virtual void Close()
+        {
+            ObjectId = 0;
+        }
     }
 }
