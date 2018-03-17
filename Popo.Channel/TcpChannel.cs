@@ -197,16 +197,16 @@ namespace Popo.Channel
         }
 
         public override void Close()
-        {
-            base.Close();
+        {            
             DisConnect();
             rpcActions.Clear();
             SendParser.Clear();
-            RecvParser.Clear();            
+            RecvParser.Clear();
             OnClose?.Invoke();
             OnClose = null;
             OnError = null;
-            OnReceive = null;            
+            OnReceive = null;
+            base.Close();
         }
     }
 }
