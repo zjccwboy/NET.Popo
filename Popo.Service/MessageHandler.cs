@@ -11,12 +11,11 @@ namespace Popo.Service
 {
     public abstract class MessageHandler : PopoObject
     {
-        public int HandlerId { get; private set; }
-
         private NetChannel channel;
         public MessageHandler(NetChannel channel, int handlerId)
         {
             this.channel = channel;
+            this.channel.OnClose = () => { this.Close(); };
         }
 
         public async Task<Packet> CallRpc(Packet packet)

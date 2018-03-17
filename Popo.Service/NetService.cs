@@ -1,6 +1,7 @@
 ﻿using Popo.Channel;
 using Popo.Object;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,27 +11,16 @@ using System.Threading.Tasks;
 
 namespace Popo.Service
 {
-    public enum NetType
+    public abstract class NetService : PopoObject, IDisposable
     {
-        Server,
-        Client,
-    }
-
-    public class NetTypeAttribute : Attribute
-    {
-        public NetType NetType { get;private set; }
-        public NetTypeAttribute(NetType netType)
-        {
-            NetType = netType;
-        }
-    }
-
-    public abstract class NetService : PopoObject
-    {
-        protected readonly Dictionary<long, NetChannel> Channels = new Dictionary<long, NetChannel>();
-        public Action<NetChannel,Packet> OnReceive;
+        protected readonly ConcurrentDictionary<long, NetChannel> Channels = new ConcurrentDictionary<long, NetChannel>();
         public abstract Task AcceptAsync();
         public abstract Task ConnectAsync();
+
+        public virtual void Dispose()
+        {
+
+        }
     }
 
 }

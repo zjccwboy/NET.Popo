@@ -9,8 +9,9 @@ namespace Popo.Channel
 {
     public class TcpChannel : NetChannel
     {
-        private SemaphoreSlim sendSemaphore = new SemaphoreSlim(1);
-        private TcpClient tcpClient;
+        public TcpClient TcpClient { get; set; }
+
+        private SemaphoreSlim sendSemaphore = new SemaphoreSlim(1);        
         private NetworkStream netStream;
         private DateTime recvTime = DateTime.Now;
         private ConcurrentDictionary<int, Action<Packet>> rpcActions = new ConcurrentDictionary<int, Action<Packet>>();       
@@ -26,18 +27,15 @@ namespace Popo.Channel
             }
         }
 
-        public TcpChannel(TcpClient tcpClient, IPEndPoint endPoint) : this(tcpClient)
+        public TcpChannel(IPEndPoint endPoint):base()
         {
             EndPoint = endPoint;
-        }
 
-        public TcpChannel(TcpClient tcpClient)
+        }
+        private TcpChannel()
         {
-            this.tcpClient = tcpClient;
             RecvParser = new PacketParse();
             SendParser = new PacketParse();
-            netStream = tcpClient.GetStream();
-            StartRecv();
         }
 
         public override async Task<bool> StartConnecting()
@@ -48,7 +46,7 @@ namespace Popo.Channel
             {
                 CancellationTokenSource cancel = new CancellationTokenSource(3000);
                 cancel.Token.Register(() => { if (Connected) { OnError?.Invoke(this, SocketError.SocketError); } }, false);
-                await tcpClient.ConnectAsync(EndPoint.Address, EndPoint.Port);
+                await TcpClient.ConnectAsync(EndPoint.Address, EndPoint.Port);
                 if (CallConnect())
                 {
                     Connected = true;
@@ -64,19 +62,32 @@ namespace Popo.Channel
 
         public override async Task<bool> ReConnecting()
         {
-            if (CallConnect() && Connected)
+            int retry = 0;
+            while (true)
             {
-                DisConnect();
+                if (!CallConnect() && Connected)
+                {
+                    TcpClient = new TcpClient();
+                    netStream = TcpClient.GetStream();                    
+                }
+                var isSuccess = await StartConnecting();
+                if (isSuccess)
+                {
+                    return true;
+                }
+                retry++;
+                if(retry == 5)
+                {
+                    return false;
+                }
             }
-            tcpClient = new TcpClient();
-            return await StartConnecting();
         }
 
         private bool CallConnect()
         {
             try
             {
-                if (!tcpClient.Connected || tcpClient.Available <= 0 || tcpClient.Client.Available <= 0)
+                if (!TcpClient.Connected || TcpClient.Available <= 0 || TcpClient.Client.Available <= 0)
                 {
                     return false;
                 }
@@ -114,7 +125,7 @@ namespace Popo.Channel
             await SendAsync(packet);
         }
 
-        private async void StartRecv()
+        public override async Task StartRecv()
         {
             while (true)
             {
@@ -125,9 +136,7 @@ namespace Popo.Channel
 
                 try
                 {
-                    CancellationTokenSource cancel = new CancellationTokenSource(3000);
-                    cancel.Token.Register(() =>{if (Connected){ OnError?.Invoke(this, SocketError.SocketError); }}, false);
-                    var count = await netStream.ReadAsync(RecvParser.Buffer.Last, RecvParser.Buffer.LastOffset, RecvParser.Buffer.LastCount, cancel.Token);
+                    var count = await netStream.ReadAsync(RecvParser.Buffer.Last, RecvParser.Buffer.LastOffset, RecvParser.Buffer.LastCount);
                     if (count <= 0)
                     {
                         throw new SocketException((int)SocketError.SocketError);
@@ -180,12 +189,23 @@ namespace Popo.Channel
 
             try
             {
-                tcpClient.Close();
-                tcpClient.Dispose();
+                TcpClient.Close();
+                TcpClient.Dispose();
             }
             catch { }
+        }
 
-            OnDisconnect?.Invoke();
+        public override void Close()
+        {
+            DisConnect();
+            rpcActions.Clear();
+            SendParser.Clear();
+            RecvParser.Clear();
+            base.Close();
+            OnClose?.Invoke();
+            OnClose = null;
+            OnError = null;
+            OnReceive = null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace Popo.Object
 {
     public class PopoObjectPool
     {
-        private static Dictionary<long, PopoObject> objects = new Dictionary<long, PopoObject>();
-        private static Dictionary<Type, Queue<PopoObject>> typeStorage = new Dictionary<Type, Queue<PopoObject>>();
+        private static ConcurrentDictionary<long, PopoObject> objects = new ConcurrentDictionary<long, PopoObject>();
+        private static ConcurrentDictionary<Type, Queue<PopoObject>> typeStorage = new ConcurrentDictionary<Type, Queue<PopoObject>>();
 
         public static PopoObject Fetch(Type type)
         {
@@ -64,8 +65,8 @@ namespace Popo.Object
 
         public static void Push(PopoObject popoObject)
         {
-            objects.Remove(popoObject.ObjectId);
-            if(!typeStorage.TryGetValue(popoObject.GetType(), out Queue<PopoObject> queue))
+            objects.TryRemove(popoObject.ObjectId, out popoObject);
+            if (!typeStorage.TryGetValue(popoObject.GetType(), out Queue<PopoObject> queue))
             {
                 queue = new Queue<PopoObject>();
             }

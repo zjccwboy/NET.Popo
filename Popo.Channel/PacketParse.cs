@@ -213,6 +213,12 @@ namespace Popo.Channel
             headSize = 0;
         }
 
+        public void Clear()
+        {
+            Flush();
+            Buffer.Flush();            
+        }
+
         public Packet ReadBuffer()
         {
             finish = false;

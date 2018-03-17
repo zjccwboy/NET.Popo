@@ -1,4 +1,5 @@
 ﻿using Popo.Channel;
+using Popo.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,12 @@ using System.Threading.Tasks;
 
 namespace Popo.Service
 {
-    public class TcpService : NetService , IDisposable
+    public class TcpService : NetService
     {
         private readonly List<Type> handlerTypes = new List<Type>();
         private TcpListener tcpListener;
         private IPEndPoint endPoint;
-        public NetChannel CurrentChannel { get; private set; }
-        
+
         public TcpService(IPEndPoint endPoint, Type[] handlerTypes)
         {
             this.handlerTypes.AddRange(handlerTypes);
@@ -31,31 +31,53 @@ namespace Popo.Service
         {
             while (true)
             {
-                var client = await tcpListener.AcceptTcpClientAsync();
-                var channel = new TcpChannel(client);
-                channel.OnError = (c,e)=> { Channels.Remove(c.ObjectId); };
-                Channels.Add(channel.ObjectId, channel);
-                channel.OnReceive = (p) => { OnReceive(channel, p); };
+                var tcpClient = await tcpListener.AcceptTcpClientAsync();
+                var channel = (TcpChannel)PopoObjectPool.Fetch(typeof(TcpChannel), endPoint);
+                channel.ChannelType = ChannelType.Server;
+                channel.TcpClient = tcpClient;
+                channel.OnError = OnChannelError;
+                Channels.TryAdd(channel.ObjectId, channel);
+                CreateMessageHandlers(channel);
             }
         }
 
         public override async Task ConnectAsync()
         {
-            if (CurrentChannel == null)
+            var tcpClient = new TcpClient();
+            var channel = (TcpChannel)PopoObjectPool.Fetch(typeof(TcpChannel), endPoint);
+            channel.ChannelType = ChannelType.Client;
+            channel.TcpClient = tcpClient;
+            channel.EndPoint = endPoint;
+            if (await channel.StartConnecting())
             {
-                var tcpClient = new TcpClient();
-                CurrentChannel = new TcpChannel(tcpClient, endPoint);
-            }
-
-            if (await CurrentChannel.StartConnecting())
-            {
-                CurrentChannel.OnError = (c,e) => { Channels.Remove(c.ObjectId); };
-                Channels.Add(CurrentChannel.ObjectId, CurrentChannel);
-                CurrentChannel.OnReceive = (p) => { OnReceive(CurrentChannel, p); };
+                channel.OnError = OnChannelError;
+                Channels.TryAdd(channel.ObjectId, channel);
+                CreateMessageHandlers(channel);
             }
         }
 
-        private void CreateChannelHandlers(NetChannel channel)
+
+        private async void OnChannelError(NetChannel channel, SocketError socketError)
+        {            
+            if(channel.ChannelType == ChannelType.Client)
+            {
+                if (! await channel.ReConnecting())
+                {
+                    channel.Close();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                channel.DisConnect();
+            }
+            Channels.TryRemove(channel.ObjectId, out NetChannel valu);
+        }
+
+        private void CreateMessageHandlers(NetChannel channel)
         {
             foreach(var type in handlerTypes)
             {
@@ -63,14 +85,20 @@ namespace Popo.Service
             }
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             var values = Channels.Values;
             foreach (var channel in values)
             {
-                channel.DisConnect();
-                Channels.Remove(channel.ObjectId);
+                channel.Close();
             }
+            Channels.Clear();
+        }
+
+        public override void Close()
+        {
+            Dispose();
+            base.Close();
         }
     }
 }

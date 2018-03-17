@@ -6,8 +6,27 @@ using System.Threading.Tasks;
 
 namespace Popo.Channel
 {
+    public enum ChannelType
+    {
+        Server,
+        Client,
+    }
+
+    public class NetTypeAttribute : Attribute
+    {
+        public ChannelType ChannelType { get; private set; }
+        public NetTypeAttribute(ChannelType channelType)
+        {
+            ChannelType = channelType;
+        }
+    }
+
     public abstract class NetChannel : PopoObject
     {
+        /// <summary>
+        /// 通道类型
+        /// </summary>
+        public ChannelType ChannelType { get; set; }
         /// <summary>
         /// 接收包解析器
         /// </summary>
@@ -17,17 +36,18 @@ namespace Popo.Channel
         /// </summary>
         protected PacketParse SendParser;
         /// <summary>
-        /// 接收回调
+        /// 接收回调事件
         /// </summary>
         public Action<Packet> OnReceive;
         /// <summary>
-        /// 连接断开回调
-        /// </summary>
-        public Action OnDisconnect;
-        /// <summary>
-        /// 错误回调
+        /// 错误回调事件
         /// </summary>
         public Action<NetChannel, SocketError> OnError;
+        /// <summary>
+        /// 通道关闭事件
+        /// </summary>
+        /// <returns></returns>
+        public Action OnClose;
         /// <summary>
         /// 连接状态
         /// </summary>
@@ -35,7 +55,7 @@ namespace Popo.Channel
         /// <summary>
         /// IP地址结构
         /// </summary>
-        public IPEndPoint EndPoint { get; protected set; }
+        public IPEndPoint EndPoint { get; set; }
         /// <summary>
         /// 开始连接
         /// </summary>
@@ -57,12 +77,16 @@ namespace Popo.Channel
         /// <returns></returns>
         public abstract Task SendAsync(Packet packet);
         /// <summary>
+        /// 开始接收数据
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task StartRecv();
+        /// <summary>
         /// 发送Rpc请求
         /// </summary>
         /// <param name="packet"></param>
         /// <param name="recvAction"></param>
         /// <returns></returns>
         public abstract Task RequestAsync(Packet packet, Action<Packet> recvAction);
-        
     }
 }

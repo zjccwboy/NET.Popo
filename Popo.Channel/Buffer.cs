@@ -144,5 +144,10 @@ namespace Popo.Channel
             }
         }
 
+        public void Flush()
+        {
+            readOffset = 0;
+            writeOffset = 0;
+        }
     }
 }
