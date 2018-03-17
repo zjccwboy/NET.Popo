@@ -1,4 +1,5 @@
 ﻿using Popo.Channel;
+using Popo.Object;
 using Popo.Service;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace TestChannel
         static TcpService service;
         static void Main(string[] args)
         {
+            PopoObjectPool.Load();
+
             //IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9936);
             //service = new TcpService(iPEndPoint);
             //service.Start();

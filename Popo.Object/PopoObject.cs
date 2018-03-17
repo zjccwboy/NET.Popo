@@ -12,7 +12,7 @@ namespace Popo.Object
 
         public virtual void Close()
         {
-            ObjectId = 0;
+            PopoObjectPool.Push(this);
         }
     }
 }

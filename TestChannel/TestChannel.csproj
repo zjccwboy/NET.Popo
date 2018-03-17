@@ -35,6 +35,10 @@
     <Reference Include="Popo.Channel">
       <HintPath>..\Popo.Channel\bin\Debug\Popo.Channel.dll</HintPath>
     </Reference>
+    <Reference Include="Popo.Object, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Popo.Object\bin\Debug\Popo.Object.dll</HintPath>
+    </Reference>
     <Reference Include="Popo.Service">
       <HintPath>..\Popo.Service\bin\Debug\Popo.Service.dll</HintPath>
     </Reference>

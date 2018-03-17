@@ -1,10 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestChannel", "TestChannel\TestChannel.csproj", "{6D673CB2-DB3C-4691-8B1D-CCA12DEC918D}"
 	ProjectSection(ProjectDependencies) = postProject
+		{4B11AC1C-C095-49D0-9175-582A47140640} = {4B11AC1C-C095-49D0-9175-582A47140640}
+		{BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE} = {BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE}
 		{6B1238CC-A3F5-435F-A183-A921EDB082C0} = {6B1238CC-A3F5-435F-A183-A921EDB082C0}
 	EndProjectSection
 EndProject
