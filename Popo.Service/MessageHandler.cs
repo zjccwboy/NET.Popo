@@ -15,7 +15,7 @@ namespace Popo.Service
         public MessageHandler(NetChannel channel, int handlerId)
         {
             this.channel = channel;
-            this.channel.OnClose = () => { this.Close(); };
+            this.channel.OnClose += () => { this.Close(); };
         }
 
         public async Task<Packet> CallRpc(Packet packet)
@@ -32,7 +32,5 @@ namespace Popo.Service
         }
 
         public abstract void OnReceive(Packet packet);
-
-        public abstract void OnError();
     }
 }

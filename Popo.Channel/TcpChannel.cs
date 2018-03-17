@@ -67,8 +67,9 @@ namespace Popo.Channel
             {
                 if (!CallConnect() && Connected)
                 {
+                    DisConnect();
                     TcpClient = new TcpClient();
-                    netStream = TcpClient.GetStream();                    
+                    netStream = TcpClient.GetStream();
                 }
                 var isSuccess = await StartConnecting();
                 if (isSuccess)

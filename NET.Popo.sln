@@ -16,12 +16,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPacketParse", "TestPack
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Popo.Channel", "Popo.Channel\Popo.Channel.csproj", "{6B1238CC-A3F5-435F-A183-A921EDB082C0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE} = {BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Popo.KCP", "Popo.KCP\Popo.KCP.csproj", "{CBA231CD-FD43-4F57-B580-2130BBA77C3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Popo.Object", "Popo.Object\Popo.Object.csproj", "{BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Popo.Service", "Popo.Service\Popo.Service.csproj", "{4B11AC1C-C095-49D0-9175-582A47140640}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE} = {BB9FCE45-1AB2-4763-BC83-8CEF1646C2DE}
+		{6B1238CC-A3F5-435F-A183-A921EDB082C0} = {6B1238CC-A3F5-435F-A183-A921EDB082C0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
