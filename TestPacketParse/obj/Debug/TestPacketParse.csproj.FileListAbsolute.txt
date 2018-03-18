@@ -1,0 +1,1 @@
+C:\Project\NET.Popo\TestPacketParse\obj\Debug\TestPacketParse.csproj.CoreCompileInputs.cache

@@ -8,7 +8,7 @@ using Popo.Object;
 
 namespace Popo.Service
 {
-    public class NetServiceManager
+    public class NetServiceFactory
     {
         public static T Create<T>(IPEndPoint iPEndPoint, Type handlerTypes) where T : NetService
         {

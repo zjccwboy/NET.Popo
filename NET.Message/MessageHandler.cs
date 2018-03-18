@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Popo.Service
+namespace NET.Message
 {
     public abstract class MessageHandler : PopoObject
     {

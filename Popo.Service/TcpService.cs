@@ -1,4 +1,5 @@
-﻿using Popo.Channel;
+﻿using NET.Message;
+using Popo.Channel;
 using Popo.Object;
 using System;
 using System.Collections.Generic;

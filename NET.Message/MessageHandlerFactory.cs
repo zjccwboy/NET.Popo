@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Popo.Service
+namespace NET.Message
 {
-    public class MessageHandlerManager
+    public class MessageHandlerFactory
     {
 
         public static T Create<T>(NetChannel channel) where T : MessageHandler

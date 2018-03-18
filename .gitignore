@@ -3,3 +3,17 @@
 ################################################################################
 
 /NET.Message/obj/Debug
+/NET.Message/bin/Debug
+/NET.System/bin/Debug
+/NET.System/obj/Debug
+/Popo.Channel/bin/Debug
+/Popo.Channel/obj/Debug
+/Popo.KCP/obj/Debug
+/Popo.KCP/bin/Debug
+/Popo.Object/bin/Debug
+/Popo.Object/obj/Debug
+/Popo.Service/bin/Debug
+/Popo.Service/obj/Debug
+/TestChannel/bin/Debug
+/TestChannel/obj/Debug
+/.vs/NET.Popo/v15
