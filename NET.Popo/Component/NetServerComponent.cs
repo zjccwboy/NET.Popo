@@ -14,8 +14,14 @@ namespace NET.Popo
         public NetServerComponent(IPEndPoint endPoint)
         {
             netService = new TcpService(endPoint);
-            netService.AddHandlerType();
+            
         }
+
+        public void AddMeesageHandler(MessageHandler handler)
+        {
+            netService.AddHandlerType(handler);
+        }
+
 
 
     }

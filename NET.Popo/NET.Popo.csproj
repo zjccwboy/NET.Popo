@@ -40,24 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channel\Buffer.cs" />
-    <Compile Include="Channel\Kcp.cs" />
-    <Compile Include="Channel\KcpHelper.cs" />
-    <Compile Include="Channel\NetChannel.cs" />
-    <Compile Include="Channel\PacketParse.cs" />
-    <Compile Include="Channel\TcpChannel.cs" />
-    <Compile Include="Message\IRequest.cs" />
-    <Compile Include="Message\IResponse.cs" />
-    <Compile Include="Message\MessageDistribute.cs" />
-    <Compile Include="Message\MessageHandler.cs" />
-    <Compile Include="Message\MessageHandlerFactory.cs" />
-    <Compile Include="Object\GlobalId.cs" />
-    <Compile Include="Object\PopoObject.cs" />
-    <Compile Include="Object\PopoObjectPool.cs" />
+    <Compile Include="Base\Channel\Buffer.cs" />
+    <Compile Include="Base\Channel\Kcp.cs" />
+    <Compile Include="Base\Channel\KcpHelper.cs" />
+    <Compile Include="Base\Channel\NetChannel.cs" />
+    <Compile Include="Base\Channel\PacketParse.cs" />
+    <Compile Include="Base\Channel\TcpChannel.cs" />
+    <Compile Include="Component\Component.cs" />
+    <Compile Include="Base\Message\IRequest.cs" />
+    <Compile Include="Base\Message\IResponse.cs" />
+    <Compile Include="Base\Message\MessageDistribute.cs" />
+    <Compile Include="Base\Message\MessageHandler.cs" />
+    <Compile Include="Base\Message\MessageHandlerFactory.cs" />
+    <Compile Include="Base\Object\GlobalId.cs" />
+    <Compile Include="Base\Object\PopoObject.cs" />
+    <Compile Include="Base\Object\PopoObjectPool.cs" />
+    <Compile Include="Component\NetServerComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\NetService.cs" />
-    <Compile Include="Service\NetServiceFactory.cs" />
-    <Compile Include="Service\TcpService.cs" />
+    <Compile Include="Base\Service\NetService.cs" />
+    <Compile Include="Base\Service\TcpService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
