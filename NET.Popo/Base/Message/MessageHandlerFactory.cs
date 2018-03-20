@@ -1,13 +1,11 @@
-﻿using Popo.Channel;
-using Popo.Object;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NET.Message
+namespace NET.Popo
 {
     public class MessageHandlerFactory
     {
@@ -22,6 +20,7 @@ namespace NET.Message
         public static MessageHandler Create(Type handlerType, NetChannel channel)
         {
             var handler = (MessageHandler)PopoObjectPool.Fetch(handlerType, channel);
+            handler.Channel = channel;
             return handler;
         }
 

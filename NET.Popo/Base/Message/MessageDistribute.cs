@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Popo.Channel;
-using Popo.Service;
 
-namespace NET.Message
+
+namespace NET.Popo
 {
     public class MessageDistribute : MessageHandler
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Popo.Object
+namespace NET.Popo
 {
     public class GlobalId
     {

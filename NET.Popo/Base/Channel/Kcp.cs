@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Popo.KCP
+namespace NET.Popo
 {
     public class Kcp
     {

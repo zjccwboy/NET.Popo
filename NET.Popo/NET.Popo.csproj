@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B747FB45-3C9D-4EAF-BDF3-054D50144747}</ProjectGuid>
+    <ProjectGuid>{444CBD34-5916-485A-8DCB-696676677585}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NET.Message</RootNamespace>
-    <AssemblyName>NET.Message</AssemblyName>
+    <RootNamespace>NET.Popo</RootNamespace>
+    <AssemblyName>NET.Popo</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,12 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Popo.Channel">
-      <HintPath>..\Popo.Channel\bin\Debug\Popo.Channel.dll</HintPath>
-    </Reference>
-    <Reference Include="Popo.Object">
-      <HintPath>..\Popo.Object\bin\Debug\Popo.Object.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,10 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="MessageHandler.cs" />
-    <Compile Include="MessageHandlerManager.cs" />
+    <Compile Include="Channel\Buffer.cs" />
+    <Compile Include="Channel\Kcp.cs" />
+    <Compile Include="Channel\KcpHelper.cs" />
+    <Compile Include="Channel\NetChannel.cs" />
+    <Compile Include="Channel\PacketParse.cs" />
+    <Compile Include="Channel\TcpChannel.cs" />
+    <Compile Include="Message\IRequest.cs" />
+    <Compile Include="Message\IResponse.cs" />
+    <Compile Include="Message\MessageDistribute.cs" />
+    <Compile Include="Message\MessageHandler.cs" />
+    <Compile Include="Message\MessageHandlerFactory.cs" />
+    <Compile Include="Object\GlobalId.cs" />
+    <Compile Include="Object\PopoObject.cs" />
+    <Compile Include="Object\PopoObjectPool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\NetService.cs" />
+    <Compile Include="Service\NetServiceFactory.cs" />
+    <Compile Include="Service\TcpService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

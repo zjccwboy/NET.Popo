@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Popo.Channel
+namespace NET.Popo
 {
     public class Packet
     {

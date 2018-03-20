@@ -17,3 +17,5 @@
 /TestChannel/bin/Debug
 /TestChannel/obj/Debug
 /.vs/NET.Popo/v15
+/NET.Popo/bin
+/NET.Popo/obj

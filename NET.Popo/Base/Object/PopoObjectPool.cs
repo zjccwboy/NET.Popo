@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Popo.Object
+namespace NET.Popo
 {
     public class PopoObjectPool
     {

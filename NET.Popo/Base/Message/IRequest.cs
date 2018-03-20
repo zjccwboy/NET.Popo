@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NET.System
+namespace NET.Popo
 {
-    public abstract class PopoSystem
+    public interface IRequest
     {
-
     }
 }

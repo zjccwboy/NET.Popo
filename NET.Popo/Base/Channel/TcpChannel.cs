@@ -5,7 +5,7 @@ using System.Threading;
 using System.Collections.Concurrent;
 using System.Net;
 
-namespace Popo.Channel
+namespace NET.Popo
 {
     public class TcpChannel : NetChannel
     {

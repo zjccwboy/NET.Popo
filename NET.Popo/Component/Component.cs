@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NET.System
+namespace NET.Popo
 {
-    public class SystemManager
+    public abstract class Component : PopoObject
     {
 
     }
