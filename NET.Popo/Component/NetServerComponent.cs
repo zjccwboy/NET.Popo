@@ -17,9 +17,9 @@ namespace NET.Popo
             
         }
 
-        public void AddMeesageHandler(MessageHandler handler)
+        public void AddMeesageHandler(Type handlerType)
         {
-            netService.AddHandlerType(handler);
+            netService.AddHandlerType(handlerType);
         }
 
 

@@ -8,7 +8,7 @@ namespace NET.Popo
 {
     public abstract class PopoObject
     {
-        public long ObjectId { get; set; }
+        public int ObjectId { get; set; }
 
         public virtual void Close()
         {
