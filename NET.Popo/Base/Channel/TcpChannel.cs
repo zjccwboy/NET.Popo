@@ -88,7 +88,7 @@ namespace NET.Popo
         {
             try
             {
-                if (!TcpClient.Connected || TcpClient.Available <= 0 || TcpClient.Client.Available <= 0)
+                if (!TcpClient.Connected || TcpClient.Client.Available <= 0 || !TcpClient.Client.Poll(1000, SelectMode.SelectRead))
                 {
                     return false;
                 }
@@ -102,27 +102,37 @@ namespace NET.Popo
 
         public override async Task SendAsync(Packet packet)
         {
-            await sendSemaphore.WaitAsync();
-            SendParser.WriteBuffer(packet);
-            if (!netStream.CanWrite)
+            try
             {
-                return;
+                await sendSemaphore.WaitAsync();
+                SendParser.WriteBuffer(packet);
+                if (!netStream.CanWrite)
+                {
+                    return;
+                }
+                while (SendParser.Buffer.DataSize > 0)
+                {
+                    CancellationTokenSource cancel = new CancellationTokenSource(3000);
+                    cancel.Token.Register(() => { if (Connected) { OnError?.Invoke(this, SocketError.SocketError); } }, false);
+                    await netStream.WriteAsync(SendParser.Buffer.First, SendParser.Buffer.FirstOffset, SendParser.Buffer.FirstCount, cancel.Token);
+                    SendParser.Buffer.UpdateRead(SendParser.Buffer.FirstCount);
+                }
             }
-            while (SendParser.Buffer.DataSize > 0)
+            catch
             {
-                CancellationTokenSource cancel = new CancellationTokenSource(3000);
-                cancel.Token.Register(() => { if (Connected) { OnError?.Invoke(this, SocketError.SocketError); } }, false);
-                await netStream.WriteAsync(SendParser.Buffer.First, SendParser.Buffer.FirstOffset, SendParser.Buffer.FirstCount, cancel.Token);
-                SendParser.Buffer.UpdateRead(SendParser.Buffer.FirstCount);
+                OnError?.Invoke(this, SocketError.SocketError);
             }
-            sendSemaphore.Release();
+            finally
+            {
+                sendSemaphore.Release();
+            }
         }
 
         public override async Task RequestAsync(Packet packet, Action<Packet> recvAction)
         {
             packet.IsRpc = true;
             packet.RpcId = newRpcId;
-            rpcActions.AddOrUpdate(packet.RpcId, recvAction, (p, a) => { return a; });
+            rpcActions.AddOrUpdate(packet.RpcId, recvAction, (p, a) => { return recvAction; });
             await SendAsync(packet);
         }
 
@@ -147,7 +157,7 @@ namespace NET.Popo
                     while (true)
                     {
                         var packet = RecvParser.ReadBuffer();
-                        if (packet == null)
+                        if (!packet.IsSuccess)
                         {
                             break;
                         }
@@ -167,13 +177,9 @@ namespace NET.Popo
                         }
                     }
                 }
-                catch(SocketException e)
+                catch
                 {
-                    OnError?.Invoke(this, e.SocketErrorCode);
-                }
-                catch(Exception e)
-                {
-                    Console.Write(e.ToString());
+                    OnError?.Invoke(this, SocketError.SocketError);
                 }
             }
         }

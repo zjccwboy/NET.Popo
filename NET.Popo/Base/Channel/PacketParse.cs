@@ -3,8 +3,13 @@ using System.Net;
 
 namespace NET.Popo
 {
-    public class Packet
+    public struct Packet
     {
+        /// <summary>
+        /// 接收成功
+        /// </summary>
+        internal bool IsSuccess;
+
         /// <summary>
         /// Rpc请求标识
         /// </summary>
@@ -33,7 +38,7 @@ namespace NET.Popo
         /// <summary>
         /// 数据包
         /// </summary>
-        public Byte[] Data;
+        public byte[] Data;
     }
 
     public enum ParseState
@@ -117,7 +122,7 @@ namespace NET.Popo
                         }
                         break;
                     case ParseState.Rpc:
-                        if (Buffer.DataSize >= rpcFlagSize && readLength == headMinSize)//读取RpcId
+                        if (Buffer.DataSize >= rpcFlagSize && readLength == headMinSize)//读取Rpc标志位
                         {
                             if (Buffer.FirstCount >= rpcFlagSize)
                             {
@@ -229,6 +234,7 @@ namespace NET.Popo
                 {
                     var packet = new Packet
                     {
+                        IsSuccess = true,
                         RpcId = rpcId,
                         IsRpc = isRpc,
                         IsCompress = isCompress,
@@ -241,7 +247,7 @@ namespace NET.Popo
                     return packet;
                 }
             }
-            return null;
+            return new Packet();
         }
 
         public void WriteBuffer(Packet packet)

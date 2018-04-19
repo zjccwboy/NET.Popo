@@ -18,9 +18,8 @@ namespace NET.Popo
 
         public async Task<Packet> CallRpc(Packet packet)
         {
-            Packet response = null;
             var tcs = new TaskCompletionSource<Packet>();
-            await Channel.RequestAsync(packet, (p) => { tcs.SetResult(response); });
+            await Channel.RequestAsync(packet, (p) => { tcs.SetResult(p); });
             return await tcs.Task;
         }
 

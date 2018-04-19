@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NET.Message;
+using Popo.Channel;
+using Popo.Object;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,33 +10,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NET.Popo
+namespace Popo.Service
 {
     public class TcpService : NetService
     {
-        private readonly HashSet<Type> handlerTypes = new HashSet<Type>();
+        private readonly List<Type> handlerTypes = new List<Type>();
         private TcpListener tcpListener;
         private IPEndPoint endPoint;
 
-        public TcpService(IPEndPoint endPoint)
+        public TcpService(IPEndPoint endPoint, Type[] handlerTypes)
         {
+            this.handlerTypes.AddRange(handlerTypes);
             this.endPoint = endPoint;
             tcpListener = new TcpListener(endPoint);
             tcpListener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             tcpListener.Server.NoDelay = true;
             tcpListener.Start();
-        }
-
-        public override void AddHandlerType(Type handlerType)
-        {
-            if (!handlerTypes.Contains(handlerType))
-            {
-                handlerTypes.Add(handlerType);
-                foreach(var channel in Channels.Values)
-                {
-                    MessageHandlerFactory.Create(handlerType, channel);
-                }
-            }
         }
 
         public override async Task AcceptAsync()
@@ -67,7 +59,7 @@ namespace NET.Popo
 
 
         private async void OnChannelError(NetChannel channel, SocketError socketError)
-        {
+        {            
             if(channel.ChannelType == ChannelType.Client)
             {
                 if (! await channel.ReConnecting())
